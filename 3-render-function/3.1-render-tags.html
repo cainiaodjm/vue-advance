@@ -1,0 +1,47 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-05-22 13:30:39
+ * @LastEditTime: 2020-05-22 14:48:40
+ * @LastEditors: your name
+ * @Description: 
+ * @FilePath: /vue-advance/3-render-function/3.1-render-tags.html
+ * @可以输入预定的版权声明、个性签名、空行等
+--> 
+<script src="../node_modules/vue/dist/vue.js"></script>
+<div id="app">
+    <example :tags="['h1','h2','h3']"></example>
+</div>
+<script>
+    /**
+     * which  renders the expected output 
+     * 
+     * <div>
+     *  <h1>0</h1>
+     *  <h2>1</h2>
+     *  <h3>2</h3>
+     * </div>
+     * **/
+    Vue.component('example',{
+        //Implement this !
+        
+        render(h) {
+            const tagArray= this.$props.tags.map((tag,index)=>{
+                return h(tag,index)
+            })
+            return h('div',tagArray)
+        },
+        props:{
+            tags:{
+                type:Array,
+                default:()=>{
+                    return []
+                }
+            }
+        }
+    })
+    new Vue({
+        el:"#app",
+    })
+</script>
+
+

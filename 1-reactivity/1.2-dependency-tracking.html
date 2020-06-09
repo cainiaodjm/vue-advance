@@ -1,0 +1,48 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-05-16 01:38:19
+ * @LastEditTime: 2020-05-18 00:16:39
+ * @LastEditors: your name
+ * @Description: 
+ * @FilePath: /vue-advance/1-reactivity/1.2-dependency-tracking.html
+ * @可以输入预定的版权声明、个性签名、空行等
+ -->
+<script>
+    let activeUpdate
+    window.Dep = class Dep{
+
+        constructor(){
+            this.subscribers=new Set()
+        }
+        depend(){
+            if(activeUpdate){
+                this.subscribers.add(activeUpdate)
+            }
+            
+        }
+        notify(){
+           for(let item of this.subscribers.keys()){
+               item()
+           }
+        }
+    }
+    function autorun(update){
+        //Implement this
+        function wrappedUpdate(){
+            activeUpdate=wrappedUpdate
+            update()
+            activeUpdate=null
+        }
+        wrappedUpdate()
+       
+        
+    }
+    const dep = new Dep()
+    autorun(()=>{
+       dep.depend() 
+       console.log('updated')
+    })
+    //should log : 'updated'
+    dep.notify()
+    //should log :''updated
+</script>

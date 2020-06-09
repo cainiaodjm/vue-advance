@@ -1,0 +1,52 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-05-03 13:39:10
+ * @LastEditTime: 2020-05-23 22:05:17
+ * @LastEditors: your name
+ * @Description: 
+ * @FilePath: /vue-advance/4-state-management/4.2-shared-object.html
+ * @可以输入预定的版权声明、个性签名、空行等
+--> 
+<script src="../node_modules/vue/dist/vue.js"></script>
+
+<div id="app">
+  <counter></counter>
+  <counter></counter>
+  <counter></counter>
+  <button @click="inc">increment</button>
+</div>
+
+<script>
+// create a counter component (that doesn't take any props)
+// all instances of it should share the same count state
+// and a button that increments all counters at the same time
+const state = {
+  count:0
+}
+const Counter = {
+  // Implement this!
+  data() {
+    return {
+      state
+    }
+  },
+  render(h) {
+    return h('div',state.count)
+  },
+}
+
+
+new Vue({
+  el: '#app',
+  // Implement this!
+  components:{
+    Counter
+  },
+  
+  methods: {
+    inc(){
+      state.count++
+    }
+  },
+})
+</script>

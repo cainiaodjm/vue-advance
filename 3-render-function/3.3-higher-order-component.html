@@ -1,0 +1,59 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-05-22 18:35:36
+ * @LastEditTime: 2020-05-23 16:37:24
+ * @LastEditors: your name
+ * @Description: 
+ * @FilePath: /vue-advance/3-render-function/3.3-higher-order-component.html
+ * @可以输入预定的版权声明、个性签名、空行等
+--> 
+<script src="../node_modules/vue/dist/vue.js"></script>
+<div id="app">
+    <smart-avatar username="vuejs"></smart-avatar>
+</div>
+<script>
+    //mock Api
+    function fetchURL(username, ){
+        setTimeout(() => {
+            cb('https://avatars3.githubusercontent.com/u/6128107?v=4&s=200')
+            
+        }, 500);
+    }
+    function withAvatarURL(Avatar){
+        return {
+            props:['username'],
+            data(){
+                return {
+                    url:''
+                }
+            },
+            created() {
+                fetchURL(this.username,(url)=>{
+                    this.url=url
+                })  
+            },
+            render(h) {
+                return h(Avatar,{
+                    props:{src:this.url}
+                })
+            },
+        }
+    }
+    const Avatar={
+        props:['src'],
+        template:`<img :src='src'>`
+    }
+    const SmartAvatar = withAvatarURL(Avatar)
+    
+    const vm = new Vue({
+        el:'#app',
+        data() {
+            return {
+                
+            }
+        },
+        components:{
+            SmartAvatar
+        }
+    })
+</script>

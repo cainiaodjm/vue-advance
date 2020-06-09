@@ -1,0 +1,50 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-05-22 01:27:17
+ * @LastEditTime: 2020-05-22 01:59:39
+ * @LastEditors: your name
+ * @Description: 
+ * @FilePath: /vue-advance/2-plugin/__test__/2.1-simple-plugin.html
+ * @可以输入预定的版权声明、个性签名、空行等
+--> 
+<script src="../../node_modules/vue/dist/vue.js"></script>
+<script>
+    const myPlugin ={
+        install(Vue){
+            Vue.mixin({
+                created() {
+                    if(this.$options.rules){
+                        //do something
+                     
+                       let foo=this.$data.foo
+                       let validate=this.$options.rules.validate
+                       let message=this.$options.rules.message
+                       this.$watch('foo',function(newValue){
+                           if(!validate(newValue)){
+                               console.log(message)
+                           }
+                       })
+                    }
+                }
+            })
+        }
+    }
+    Vue.use(myPlugin)
+    const vm = new Vue({
+        data() {
+            return {
+                foo:10
+            }
+        },
+        rules:{
+            validate:(value)=>{
+                return value>1
+            },
+            message:'foo must be greater than one'
+        }
+    })
+    // console.log(vm.foo)
+    vm.foo=0 //should log 'foo must be greater than one'
+    // console.log(vm.foo)
+    vm.foo=-1
+</script>
