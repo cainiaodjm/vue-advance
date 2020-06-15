@@ -1,0 +1,32 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-06-14 22:51:29
+ * @LastEditTime: 2020-06-16 00:07:48
+ * @LastEditors: your name
+ * @Description: 
+ * @FilePath: /vue-advance/vue-demo/2.2.html
+ * @可以输入预定的版权声明、个性签名、空行等
+--> 
+<script>
+    function defineReactive(obj,key,value){
+        Object.defineProperty(obj,key,{
+            enumerable:true,
+            configurable:true,
+            get:function(){
+                return value
+            },
+            set:function(newVal){
+                if(value === newVal){
+                    return 
+                }
+                console.log(value)
+                value = newVal
+            }
+        })
+    }
+    var obj ={}
+    defineReactive(obj,'foo','foo')
+    obj.foo="12"
+    obj.foo="23"
+    console.log(obj)
+</script>
